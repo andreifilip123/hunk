@@ -86,10 +86,12 @@ describe("PTY current line", () => {
       }
     }
 
-    const baselineSteps = await stepsBeforeScrolling([]);
+    const baselineSteps = await stepsBeforeScrolling(["--scroll-off", "0"]);
+    const defaultSteps = await stepsBeforeScrolling([]);
     const marginSteps = await stepsBeforeScrolling(["--scroll-off", "5"]);
 
-    expect(baselineSteps - marginSteps).toBe(5);
+    expect(baselineSteps - defaultSteps).toBe(5);
+    expect(defaultSteps).toBe(marginSteps);
   });
 
   test("one-cell mouse jitter still selects the exact clicked line", async () => {
@@ -278,8 +280,12 @@ describe("PTY current line", () => {
         scrolled = await measureKeyScroll(session, "j", 12);
       }
       expect(scrolled).toBeGreaterThan(0);
-      // Settle the pinned file-header handoff before measuring the held-key burst.
-      expect(await measureKeyScroll(session, "j", 12)).toBeGreaterThan(0);
+      // The five-row margin starts scrolling before the pinned header hands off. Move past
+      // that transition so the burst measures line steps rather than header geometry changes.
+      for (let step = 0; step < 6; step += 1) {
+        expect(await measureKeyScroll(session, "j", 12)).toBeGreaterThan(0);
+      }
+      expect(await measureKeyScroll(session, "j", 12)).toBe(1);
 
       const before = (await session.text({ immediate: true })).split("\n");
       const anchorIndex = before.findLastIndex((line) => /line\d+ = \d+;/.test(line));

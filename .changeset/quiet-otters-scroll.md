@@ -2,4 +2,4 @@
 "hunkdiff": minor
 ---
 
-Add a `scroll_off` setting (and `--scroll-off <rows>` flag) that keeps the current line clear of the viewport top/bottom edge while stepping through a diff, like Vim's `scrolloff`.
+Add a `scroll_off` setting (and `--scroll-off <rows>` flag) that defaults to keeping five rows of context around the current line while stepping through a diff, like Vim's `scrolloff`, with `scroll_off = 0` or `--scroll-off 0` restoring edge-only scrolling.

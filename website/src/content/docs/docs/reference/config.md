@@ -126,7 +126,7 @@ Keep the current line at least this many rows clear of the viewport top/bottom e
 
 - **Type:** integer
 - **Accepted:** 0 through 40
-- **Built-in default:** `0`
+- **Built-in default:** `5`
 
 ---
 

@@ -1,4 +1,4 @@
-export const DEFAULT_SCROLL_OFF = 0;
+export const DEFAULT_SCROLL_OFF = 5;
 export const MIN_SCROLL_OFF = 0;
 export const MAX_SCROLL_OFF = 40;
 

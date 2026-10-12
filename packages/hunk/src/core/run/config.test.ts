@@ -391,13 +391,24 @@ describe("config resolution", () => {
     const input = createPatchPagerInput();
     const resolved = resolveConfiguredCliInput(input, { cwd: repo, env: { HOME: home } }).input
       .options;
-    expect(resolved.scrollOff).toBe(0);
+    expect(resolved.scrollOff).toBe(5);
 
     mkdirSync(join(home, ".config", "hunk"), { recursive: true });
     writeFileSync(join(home, ".config", "hunk", "config.toml"), "scroll_off = 5\n");
     const configured = resolveConfiguredCliInput(input, { cwd: repo, env: { HOME: home } }).input
       .options;
     expect(configured.scrollOff).toBe(5);
+
+    const disabled = resolveConfiguredCliInput(
+      { ...input, options: { ...input.options, scrollOff: 0 } },
+      { cwd: repo, env: { HOME: home } },
+    ).input.options;
+    expect(disabled.scrollOff).toBe(0);
+
+    writeFileSync(join(home, ".config", "hunk", "config.toml"), "scroll_off = 0\n");
+    expect(
+      resolveConfiguredCliInput(input, { cwd: repo, env: { HOME: home } }).input.options.scrollOff,
+    ).toBe(0);
 
     for (const invalid of ["-1", "41", '"5"']) {
       writeFileSync(join(home, ".config", "hunk", "config.toml"), `scroll_off = ${invalid}\n`);

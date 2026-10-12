@@ -30,7 +30,7 @@ This reference is generated from the command metadata used by Hunk itself. Run `
 | `--file-gap <rows>`            | file separator rows, including the ─ rule: 0-8 Default: 1.               |
 | `--hunk-gap <rows>`            | blank rows before each later hunk: 0-8 Default: 0.                       |
 | `--wheel-scroll-lines <lines>` | rows per wheel event: auto or 1-10 Default: auto.                        |
-| `--scroll-off <rows>`          | rows the current line keeps clear of the viewport edge: 0-40 Default: 0. |
+| `--scroll-off <rows>`          | rows the current line keeps clear of the viewport edge: 0-40 Default: 5. |
 | `--wrap`                       | wrap long diff lines                                                     |
 | `--no-wrap`                    | truncate long diff lines to one row                                      |
 | `--hunk-headers`               | show hunk metadata rows                                                  |
